@@ -2,9 +2,9 @@ import CarModelCard from "./CarModelCard";
 import { Carousel } from "@mantine/carousel";
 import { breakpoints } from "../../public/breakpoints";
 import { useViewportSize } from "@mantine/hooks";
+import { useRouter } from "next/router";
 
 import type { Car } from "../../public/api/types";
-import { useRouter } from "next/router";
 
 interface CarModelsProps {
     cars: Car[];

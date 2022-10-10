@@ -40,7 +40,7 @@ const CarModelCard: React.FC<CarModelCardProps> = ({
     };
 
     return (
-        <Stack className="car-model-card">
+        <Stack className="car-model-card" p="2px">
             <NextLink href={car.id} key={car.id}>
                 <a className="car-model-card__goto">
                     <Stack>
@@ -48,7 +48,7 @@ const CarModelCard: React.FC<CarModelCardProps> = ({
                         <Stack>
                             <Image
                                 src={car.imageUrl}
-                                alt="Volvo car model"
+                                alt={`An image containing the ${car.bodyType} ${car.modelName}, ${car.modelType}`}
                                 width={800}
                                 height={600}
                             />

@@ -4,6 +4,7 @@ import { breakpoints } from "../../public/breakpoints";
 import { useViewportSize } from "@mantine/hooks";
 
 import type { Car } from "../../public/api/types";
+import { useRouter } from "next/router";
 
 interface CarModelsProps {
     cars: Car[];
@@ -11,6 +12,7 @@ interface CarModelsProps {
 
 const CarModels: React.FC<CarModelsProps> = ({ cars = [] }) => {
     const { width: viewPortWidth } = useViewportSize();
+    const router = useRouter();
 
     const _slideSize =
         viewPortWidth > breakpoints.md
@@ -25,9 +27,9 @@ const CarModels: React.FC<CarModelsProps> = ({ cars = [] }) => {
 
     return (
         <Carousel
-            key={_slideSize}
+            key={`${_slideSize}_${router.query.q}`}
             height={_slideHeight}
-            /* Transition styles from mantine */
+            /* Override mantine styles */
             styles={{
                 indicator: {
                     width: "8px",
@@ -40,16 +42,23 @@ const CarModels: React.FC<CarModelsProps> = ({ cars = [] }) => {
                 },
                 indicators: {
                     bottom: "-15%",
+                    padding: "1rem 0 ",
                 },
                 controls: {
                     bottom: "-100%",
                     justifyContent: "right",
                     gap: "1rem",
+
+                    " > [tabindex='-1']": {
+                        opacity: "0.5 !important",
+                        cursor: "not-allowed",
+                    },
                 },
             }}
             slideSize={_slideSize}
             withControls={!isMobile}
             withIndicators={isMobile}
+            slidesToScroll={isMobile ? 1 : 4}
             align="start"
             containScroll="keepSnaps"
             slideGap="lg"

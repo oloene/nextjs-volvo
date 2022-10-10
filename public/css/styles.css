@@ -7,6 +7,7 @@ a {
     color: inherit;
 }
 
+a:focus img,
 a:hover img {
     scale: 1.05;
 }

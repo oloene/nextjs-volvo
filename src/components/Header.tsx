@@ -11,31 +11,31 @@ const Header: React.FC<HeaderProps> = ({ carsByCategory }) => {
     const router = useRouter();
     const { width: viewPortWidth } = useViewportSize();
 
-    const handleOnClick = (filterBy: string) => {
-        router.push(`/?q=${filterBy}`);
+    const setFilterByCategory = (category: string) => {
+        router.push(`/?q=${category}`);
     };
 
     const isMobile = viewPortWidth <= breakpoints.md;
 
+    // Active when filter matches category or when no filter is set and category is "all"
+    const isActive = (category: string) =>
+        category === router?.query?.q ||
+        (router?.query?.q == null && category === "all")
+            ? "2px solid rgb(28, 107, 186)"
+            : "2px solid transparent";
+
     return (
-        <Stack my="4rem" align="center">
-            <Title order={1} mb="1rem">
+        <Stack mt="1rem" mb="2rem" align="center">
+            <Title order={1} mb="0.5rem">
                 Our models
             </Title>
             <Group spacing={isMobile ? 25 : 50}>
                 {Object.entries(carsByCategory).map(([category, count]) => (
                     <UnstyledButton
                         key={category}
-                        onClick={() => handleOnClick(category)}
+                        onClick={() => setFilterByCategory(category)}
                     >
-                        <Text
-                            style={{
-                                borderBottom:
-                                    category === router?.query?.q
-                                        ? "2px solid rgb(28, 107, 186)"
-                                        : "2px solid transparent",
-                            }}
-                        >
+                        <Text style={{ borderBottom: isActive(category) }}>
                             {category} <span>({count})</span>
                         </Text>
                     </UnstyledButton>

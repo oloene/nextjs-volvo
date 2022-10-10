@@ -3,6 +3,7 @@ import { Carousel } from "@mantine/carousel";
 import { breakpoints } from "../../public/breakpoints";
 import { useViewportSize } from "@mantine/hooks";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 import type { Car } from "../../public/api/types";
 
@@ -65,7 +66,13 @@ const CarModels: React.FC<CarModelsProps> = ({ cars = [] }) => {
         >
             {cars.map((car) => (
                 <Carousel.Slide key={car.id}>
-                    <CarModelCard car={car} isMobile={isMobile} />
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <CarModelCard car={car} isMobile={isMobile} />
+                    </motion.div>
                 </Carousel.Slide>
             ))}
         </Carousel>
